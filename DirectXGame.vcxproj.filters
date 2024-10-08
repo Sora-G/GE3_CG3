@@ -19,6 +19,9 @@
     <Filter Include="ヘッダー ファイル\math">
       <UniqueIdentifier>{aa465d74-ba71-4831-988d-ca0dd31dcb0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シェーダーファイル">
+      <UniqueIdentifier>{70dafd03-5dc4-487b-87fc-318957fc9972}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,10 +48,6 @@
     <ClCompile Include="externals\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Object3d.PS.hlsl" />
-    <FxCompile Include="Object3d.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imconfig.h">
@@ -97,6 +96,16 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Object3d.hlsli" />
+    <None Include="resources\shaders\Object3d.hlsli">
+      <Filter>シェーダーファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resources\shaders\Object3d.PS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="resources\shaders\Object3d.VS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -93,10 +93,10 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\..\a\Object3d.PS.hlsl">
+    <FxCompile Include="Object3d.PS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="..\..\a\Object3d.VS.hlsl">
+    <FxCompile Include="Object3d.VS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
   </ItemGroup>

@@ -14,6 +14,7 @@
 #include "Matrix.h"
 #include <fstream>
 #include <sstream>
+#include "Input.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -511,6 +512,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//ウィンドウの表示
 	ShowWindow(hwnd, SW_SHOW);
+
+	//ポインタ
+	Input* input = nullptr;
+	//入力の初期化
+	input = new Input();
+	input->Initialize(wc.hInstance, hwnd);
+
+	//入力開放
+	delete input;
 
 
 	//DXGIファクトリーの生成

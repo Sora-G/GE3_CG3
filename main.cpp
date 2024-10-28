@@ -520,12 +520,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input = new Input();
 	input->Initialize(wc.hInstance, hwnd);
 
-	//入力の更新
-	input->Update();
-
-	//入力開放
-	delete input;
-
 
 	//DXGIファクトリーの生成
 	IDXGIFactory7* dxgiFactory = nullptr;
@@ -1113,6 +1107,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 		else
 		{
+			//入力の更新
+			input->Update();
+
+			if (input->PushKey(DIK_D)) {
+				transform.translate.x += 0.01f;
+			}
+			if (input->PushKey(DIK_A)) {
+				transform.translate.x -= 0.01f;
+			}
+			if (input->PushKey(DIK_W)) {
+				transform.translate.y += 0.01f;
+			}
+			if (input->PushKey(DIK_S)) {
+				transform.translate.y -= 0.01f;
+			}
+
 			///↓-------ゲームの処理-------↓
 			ImGui_ImplDX12_NewFrame();
 			ImGui_ImplWin32_NewFrame();
@@ -1308,6 +1318,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	vertexShaderBlob->Release();
 	materialResource->Release();
 
+	//入力開放
+	delete input;
 
 #ifdef _DEBUG
 	debugController->Release();

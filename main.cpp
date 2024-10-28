@@ -15,6 +15,7 @@
 #include <sstream>
 #include "Input.h"
 #include "wrl.h"
+#include "WinApp.h"
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -440,6 +441,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 //	}
 //
 //#endif // DEBUG
+
+	//ポインタ
+	WinApp* winApp = nullptr;
+	//WindowsAPIの初期化
+	winApp = new WinApp();
+	winApp->Initialize();
 
 	//ポインタ
 	Input* input = nullptr;
@@ -1247,6 +1254,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//入力開放
 	delete input;
+	//WindowsAPI解放
+	delete winApp;
 
 #ifdef _DEBUG
 	debugController->Release();

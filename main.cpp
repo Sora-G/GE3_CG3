@@ -1260,9 +1260,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//WindowsAPI解放
 	delete winApp;
 
-#ifdef _DEBUG
-	debugController->Release();
-#endif // _DEBUG
+//#ifdef _DEBUG
+//	debugController->Release();
+//#endif // _DEBUG
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;

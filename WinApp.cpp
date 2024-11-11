@@ -1,5 +1,10 @@
 #include "WinApp.h"
+#include "externals/imgui/imgui.h"
 #include "externals/imgui/imgui_impl_win32.cpp"
+#include <cstdint>
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 
 //ウィンドウプロージャ
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -23,9 +28,30 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
+LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+	{
+		return true;
+	}
+
+	//メッセージに応じてゲーム固有の処理を行う
+	switch (msg)
+	{
+		//ウィンドウが破棄された
+	case WM_DESTROY:
+		//OSに対して、アプリの終了を伝える
+		PostQuitMessage(0);
+		return 0;
+	}
+
+	//標準のメッセージ処理を行う
+	return DefWindowProc(hwnd, msg, wparam, lparam);
+}
+
 void WinApp::Initialize()
 {
-	CoInitializeEx(0, COINIT_MULTITHREADED);
+	HRESULT hr = CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	WNDCLASS wc{};
 
@@ -44,11 +70,6 @@ void WinApp::Initialize()
 
 	//ウィンドウクラスを登録する
 	RegisterClass(&wc);
-
-
-	//クライアント領域のサイズ
-	const int32_t kClientWidth = 1280;
-	const int32_t kClientHeight = 720;
 
 	//ウィンドウサイズを表す構造体にクライアント領域を入れる
 	RECT wrc = { 0,0,kClientWidth, kClientHeight };

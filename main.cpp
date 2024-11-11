@@ -7,7 +7,6 @@
 #include <cassert>
 #include <dxgidebug.h>
 #include <dxcapi.h>
-#include "externals/imgui/imgui.h"
 #include "externals/imgui/imgui_impl_dx12.h"
 #include "externals/DirectXTex/DirectXTex.h"
 #include "Matrix.h"
@@ -15,8 +14,6 @@
 #include <sstream>
 #include "Input.h"
 #include "wrl.h"
-
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //libのリンク
 #pragma comment(lib,"d3d12.lib")
@@ -451,6 +448,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//DXGIファクトリーの生成
 	IDXGIFactory7* dxgiFactory = nullptr;
 
+
+	//メインスレッドではMTAでCOM利用
+	HRESULT hr = CoInitializeEx(0, COINIT_MULTITHREADED);
+
 	//HRESULTはWindows系のエラーコードであり
 	//関数が成功したかどうかをSUCCEEDEDマクロで判定できる
 	HRESULT hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
@@ -570,8 +571,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//スワップチェインを生成する
 	IDXGISwapChain4* swapChain = nullptr;						
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};						
-	swapChainDesc.Width = kClientWidth;							//画面の幅　ウィンドウのクライアント領域を同じものにしておく				
-	swapChainDesc.Height = kClientHeight;						//画面の高さ　ウィンドウのクライアント領域を同じものにしておく
+	swapChainDesc.Width = WinApp::kClientWidth;					//画面の幅　ウィンドウのクライアント領域を同じものにしておく				
+	swapChainDesc.Height = WinApp::kClientHeight;				//画面の高さ　ウィンドウのクライアント領域を同じものにしておく
 	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;			//色の形式
 	swapChainDesc.SampleDesc.Count = 1;							//マルチサンプルしない
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;//描画のターゲットとして利用する

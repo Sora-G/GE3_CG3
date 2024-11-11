@@ -1,7 +1,7 @@
 #include "WinApp.h"
 #include "externals/imgui/imgui_impl_win32.cpp"
 
-//ƒEƒBƒ“ƒhƒEƒvƒ[ƒWƒƒ
+//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ãƒ¼ã‚¸ãƒ£
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
@@ -9,17 +9,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 		return true;
 	}
 
-	//ƒƒbƒZ[ƒW‚É‰ž‚¶‚ÄƒQ[ƒ€‚ÌŒÅ—Lˆ—‚ðs‚¤
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«å¿œã˜ã¦ã‚²ãƒ¼ãƒ ã®å›ºæœ‰å‡¦ç†ã‚’è¡Œã†
 	switch (msg)
 	{
-		//ƒEƒBƒ“ƒhƒE”jŠü‚³‚ê‚½
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç ´æ£„ã•ã‚ŒãŸ
 	case WM_DESTROY:
-		//OS‚É‘Î‚µ‚ÄƒAƒvƒŠ‚ÌI—¹‚ð“`‚¦‚é
+		//OSã«å¯¾ã—ã¦ã‚¢ãƒ—ãƒªã®çµ‚äº†ã‚’ä¼ãˆã‚‹
 		PostQuitMessage(0);
 		return 0;
 	}
 
-	//•W€‚ÌƒƒbƒZ[ƒWˆ—‚ðs‚¤
+	//æ¨™æº–ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†ã‚’è¡Œã†
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
@@ -29,48 +29,48 @@ void WinApp::Initialize()
 
 	WNDCLASS wc{};
 
-	//ƒEƒBƒ“ƒhƒEƒvƒ[ƒWƒƒ
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ãƒ¼ã‚¸ãƒ£
 	wc.lpfnWndProc = WindowProc;
 
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼(‚È‚ñ‚Å‚à‚¢‚¢)
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å(ãªã‚“ã§ã‚‚ã„ã„)
 	wc.lpszClassName = L"CG2WindowClass";
 
-	//ƒCƒ“ƒXƒ^ƒ“ƒXƒoƒ“ƒhƒ‹
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
 	wc.hInstance = GetModuleHandle(nullptr);
 
-	//ƒJ[ƒ\ƒ‹
+	//ã‚«ãƒ¼ã‚½ãƒ«
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ð“o˜^‚·‚é
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’ç™»éŒ²ã™ã‚‹
 	RegisterClass(&wc);
 
 
-	//ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ÌƒTƒCƒY
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã®ã‚µã‚¤ã‚º
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	//ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ð•\‚·\‘¢‘Ì‚ÉƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ð“ü‚ê‚é
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’è¡¨ã™æ§‹é€ ä½“ã«ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã‚’å…¥ã‚Œã‚‹
 	RECT wrc = { 0,0,kClientWidth, kClientHeight };
 
-	//ƒNƒ‰ƒCƒAƒ“ƒg—Ìˆæ‚ðŠî‚ÉŽÀÛ‚ÌƒTƒCƒY‚Éwrc‚ð•ÏX‚µ‚Ä‚à‚ç‚¤
+	//ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆé ˜åŸŸã‚’åŸºã«å®Ÿéš›ã®ã‚µã‚¤ã‚ºã«wrcã‚’å¤‰æ›´ã—ã¦ã‚‚ã‚‰ã†
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
-	//ƒEƒBƒ“ƒhƒE‚Ì¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç”Ÿæˆ
 	HWND hwnd = CreateWindow(
-		wc.lpszClassName,		//—˜—p‚·‚éƒNƒ‰ƒX–¼
-		L"GE3_01-02",			//ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶Žš(‚È‚ñ‚Å‚à‚¢‚¢)
-		WS_OVERLAPPEDWINDOW,	//‚æ‚­Œ©‚éƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-		CW_USEDEFAULT,			//•\Ž¦XÀ•W(Windous‚É”C‚¹‚é)
-		CW_USEDEFAULT,			//•\Ž¦YÀ•W(WindousOS‚É”C‚¹‚é)
-		wrc.right - wrc.left,	//ƒEƒBƒ“ƒhƒE‚Ì‰¡•
-		wrc.bottom - wrc.top,	//ƒEƒBƒ“ƒhƒE‚Ì—§•
-		nullptr,				//eƒEƒBƒ“ƒhƒEƒoƒ“ƒhƒ‹
-		nullptr,				//ƒƒjƒ…[ƒoƒ“ƒhƒ‹
-		wc.hInstance,			//ƒCƒ“ƒXƒ^ƒ“ƒXƒoƒ“ƒhƒ‹
-		nullptr);				//ƒIƒvƒVƒ‡ƒ“
+		wc.lpszClassName,		//åˆ©ç”¨ã™ã‚‹ã‚¯ãƒ©ã‚¹å
+		L"GE3_01-02",			//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®æ–‡å­—(ãªã‚“ã§ã‚‚ã„ã„)
+		WS_OVERLAPPEDWINDOW,	//ã‚ˆãè¦‹ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+		CW_USEDEFAULT,			//è¡¨ç¤ºXåº§æ¨™(Windousã«ä»»ã›ã‚‹)
+		CW_USEDEFAULT,			//è¡¨ç¤ºYåº§æ¨™(WindousOSã«ä»»ã›ã‚‹)
+		wrc.right - wrc.left,	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æ¨ªå¹…
+		wrc.bottom - wrc.top,	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ç«‹å¹…
+		nullptr,				//è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		nullptr,				//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		wc.hInstance,			//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãƒãƒ³ãƒ‰ãƒ«
+		nullptr);				//ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 
-	//ƒEƒBƒ“ƒhƒE‚Ì•\Ž¦
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º
 	ShowWindow(hwnd, SW_SHOW);
 }
 

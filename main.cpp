@@ -450,7 +450,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Input* input = nullptr;
 	//入力の初期化
 	input = new Input();
-	input->Initialize(winApp->GetHInstance(), winApp->GetHwnd());
+	input->Initialize(winApp);
 
 
 	//DXGIファクトリーの生成
@@ -1027,21 +1027,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//camera変数の作成
 	Transform cameraTransform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
-	
-
-	MSG msg{};
-
 
 	//ウィンドウの×が押されるまでループ
-	while (msg.message != WM_QUIT)
+	while (true)
 	{
-		//ウィンドウにメッセージが来てたら最優先で処理させる
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-		else
+		//ウィンドウズのメッセージ処理
+		if (winApp->ProcessMessage())
 		{
 			//入力の更新
 			input->Update();
@@ -1137,7 +1128,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			transform.rotate.y += 0.03f;
 
-			
+
 
 			///-----描画処理-----
 
@@ -1149,7 +1140,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			commandList->IASetVertexBuffers(0, 1, &vertexBufferView);
 			//形状の設定　PSOに設定しているものとは別　同じものを設定すると考えておけばいい
 			commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			
+
 			//マテリアルCBufferの場所を設定
 			commandList->SetGraphicsRootConstantBufferView(0, materialResource->GetGPUVirtualAddress());
 
@@ -1174,7 +1165,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			//描画（DrawCall）６個のインデックスを使用し１つのインスタンスを描画
 			commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
-			
+
 			///-----ここまで-----
 
 
@@ -1221,6 +1212,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			assert(SUCCEEDED(hr));
 
 			///↑-------ゲームの処理-------↑
+
+			//ゲームループを抜ける
+			break;
 		}
 	}
 
@@ -1256,13 +1250,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//入力開放
 	delete input;
+	
+
+	winApp = nullptr;
+	//WindowsAPIの終了処理
+	winApp->Finalize();
+	//WindowsAPI解放
 	delete winApp;
 
 #ifdef _DEBUG
 	debugController->Release();
 #endif // _DEBUG
-	CloseWindow(winApp->GetHwnd());
-
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;
@@ -1273,8 +1271,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
 		debug->Release();
 	}
-
-	CoUninitialize();
 
 	return 0;
 }

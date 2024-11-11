@@ -3,9 +3,14 @@
 #define DIRECTINPUT_VERSION 0x0800 //バージョン指定
 #include <dinput.h>
 #include <wrl.h>
+#include "WinApp.h"
 
 class Input
 {
+private:
+	//WindowsAPI
+	WinApp* winApp_ = nullptr;
+
 public:
 
 	//nameSpace省略
@@ -14,7 +19,7 @@ public:
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
-	void Initialize(HINSTANCE hInstance, HWND hwnd);
+	void Initialize(WinApp* winApp);
 
 	/// <summary>
 	/// 更新処理

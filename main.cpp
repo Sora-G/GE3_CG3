@@ -427,18 +427,18 @@ ModelData LoadObjFile(const std::string& dicitionaryPath, const std::string& fil
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
 {
 
-//#ifdef _DEBUG
-//
-//	ID3D12Debug1* debugController = nullptr;
-//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) 
-//	{
-//		//デバッグレイヤーを有効化する
-//		debugController->EnableDebugLayer();
-//		//さらにGPU側でもチェックを行うようにする
-//		debugController->SetEnableGPUBasedValidation(TRUE);
-//	}
-//
-//#endif // DEBUG
+#ifdef _DEBUG
+
+	ID3D12Debug1* debugController = nullptr;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) 
+	{
+		//デバッグレイヤーを有効化する
+		debugController->EnableDebugLayer();
+		//さらにGPU側でもチェックを行うようにする
+		debugController->SetEnableGPUBasedValidation(TRUE);
+	}
+
+#endif // DEBUG
 
 	//ポインタ
 	WinApp* winApp = nullptr;
@@ -1260,9 +1260,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//WindowsAPI解放
 	delete winApp;
 
-//#ifdef _DEBUG
-//	debugController->Release();
-//#endif // _DEBUG
+#ifdef _DEBUG
+	debugController->Release();
+#endif // _DEBUG
 
 	//リソースリークチェック
 	IDXGIDebug1* debug;

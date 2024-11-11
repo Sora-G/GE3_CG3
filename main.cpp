@@ -1050,6 +1050,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				transform.translate.y -= 0.01f;
 			}
 
+
 			///↓-------ゲームの処理-------↓
 			ImGui_ImplDX12_NewFrame();
 			ImGui_ImplWin32_NewFrame();
@@ -1212,6 +1213,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			assert(SUCCEEDED(hr));
 
 			///↑-------ゲームの処理-------↑
+
 
 			//ゲームループを抜ける
 			break;

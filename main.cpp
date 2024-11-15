@@ -1267,7 +1267,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//入力開放
 	delete input;
 
-
 	winApp = nullptr;
 	//WindowsAPIの終了処理
 	winApp->Finalize();

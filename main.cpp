@@ -1250,16 +1250,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	vertexShaderBlob->Release();
 	materialResource->Release();
 
-	//入力開放
-	delete input;
-	
-
-	winApp = nullptr;
-	//WindowsAPIの終了処理
-	winApp->Finalize();
-	//WindowsAPI解放
-	delete winApp;
-
 #ifdef _DEBUG
 	debugController->Release();
 #endif // _DEBUG
@@ -1273,6 +1263,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
 		debug->Release();
 	}
+
+	//入力開放
+	delete input;
+
+
+	winApp = nullptr;
+	//WindowsAPIの終了処理
+	winApp->Finalize();
+	//WindowsAPI解放
+	delete winApp;
 
 	return 0;
 }

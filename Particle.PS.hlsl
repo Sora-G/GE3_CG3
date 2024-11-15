@@ -1,5 +1,11 @@
 #include "Particle.hlsli"
 
+struct TransformationMatrix
+{
+    Matrix4x4 WVP;
+    Matrix4x4 World;
+};
+
 struct Material
 {
     float32_t4 color;

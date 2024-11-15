@@ -2,6 +2,12 @@
 
 struct TransformationMatrix
 {
+    Matrix4x4 WVP;
+    Matrix4x4 World;
+};
+
+struct TransformationMatrix
+{
     float32_t4x4 WVP;
 };
 StructuredBuffer<TransformationMatrix> gTransformationMatrices : register(b0);

@@ -1034,9 +1034,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//ウィンドウズのメッセージ処理
 		if (winApp->ProcessMessage())
 		{
-			
-
-
 			//ゲームループを抜ける
 			break;
 		}

@@ -25,11 +25,6 @@ public:
 	/// </summary>
 	void Initialize();
 
-	/// <summary>
-	/// 更新処理
-	/// </summary>
-	void Update();
-
 	//終了
 	void Finalize();
 

@@ -1220,10 +1220,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 	}
 
+	//WindowsAPIの終了処理
+	winApp->Finalize();
+
 	//ImGuiの終了処理　詳細はさして重要ではないので解説は省略する
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+
+	//入力開放
+	delete input;
+
+	//WindowsAPI解放
+	delete winApp;
 
 	CloseHandle(fenceEvent);
 	fence->Release();
@@ -1263,15 +1272,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		debug->ReportLiveObjects(DXGI_DEBUG_D3D12, DXGI_DEBUG_RLO_ALL);
 		debug->Release();
 	}
-
-	//入力開放
-	delete input;
-
-	//winApp = nullptr;
-	//WindowsAPIの終了処理
-	winApp->Finalize();
-	//WindowsAPI解放
-	delete winApp;
 
 	return 0;
 }

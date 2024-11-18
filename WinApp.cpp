@@ -77,7 +77,7 @@ void WinApp::Initialize()
 	//ウィンドウの生成
 	hwnd = CreateWindow(
 		wc.lpszClassName,		//利用するクラス名
-		L"GE3_01-02",			//タイトルバーの文字(なんでもいい)
+		L"GE3_03-05",			//タイトルバーの文字(なんでもいい)
 		WS_OVERLAPPEDWINDOW,	//よく見るウィンドウスタイル
 		CW_USEDEFAULT,			//表示X座標(Windousに任せる)
 		CW_USEDEFAULT,			//表示Y座標(WindousOSに任せる)
@@ -90,11 +90,6 @@ void WinApp::Initialize()
 
 	//ウィンドウの表示
 	ShowWindow(hwnd, SW_SHOW);
-}
-
-void WinApp::Update()
-{
-
 }
 
 void WinApp::Finalize()

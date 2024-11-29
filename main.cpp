@@ -1288,7 +1288,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			//描画(DrawCall/ドローコール)３頂点で１つのインスタンス
 			//commandList->DrawInstanced(6, 1, 0, 0);
-			commandList->DrawInstanced(UINT(modelData.vertices.size()), 10, 0, 0);
+			//commandList->DrawInstanced(UINT(modelData.vertices.size()), 10, 0, 0);
+			//描画　6頂点のいたポリゴンを、KNumInstance(今回は10)だけInstance描画を行う
+			commandList->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
 
 
 			//Spriteの描画。変更が必要なものだけ変更する
@@ -1301,9 +1303,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			//描画（DrawCall）６個のインデックスを使用し１つのインスタンスを描画
 			commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
 
-			//描画　6頂点のいたポリゴンを、KNumInstance(今回は10)だけInstance描画を行う
-			commandList->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
-
+			
 			///-----ここまで-----
 
 

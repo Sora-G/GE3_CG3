@@ -1,5 +1,10 @@
 #include "Particle.hlsli"
 
+struct TransformationMatrix
+{
+    float32_t4x4 WVP;
+};
+
 StructuredBuffer<TransformationMatrix> gTransformationMatrices : register(t0);
 
 struct VertexShaderInput

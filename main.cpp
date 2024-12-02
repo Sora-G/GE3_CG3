@@ -23,6 +23,7 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+
 //vecto4構造体
 typedef struct Vector4
 {

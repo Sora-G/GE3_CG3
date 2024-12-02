@@ -519,7 +519,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	assert(device != nullptr);
 	Log("Comprete Create D3D12Device!\n");
 
-
+	 
 #ifdef _DEBUG
 
 	ID3D12InfoQueue* infoQueue = nullptr;

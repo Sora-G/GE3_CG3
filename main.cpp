@@ -1293,12 +1293,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			commandList->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
 
 
-			//Spriteの描画。変更が必要なものだけ変更する
-			commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);//VBVを設定
-			//TransformationMatrixBufferの場所を設定
-			commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite->GetGPUVirtualAddress());
+			////Spriteの描画。変更が必要なものだけ変更する
+			//commandList->IASetVertexBuffers(0, 1, &vertexBufferViewSprite);//VBVを設定
+			////TransformationMatrixBufferの場所を設定
+			//commandList->SetGraphicsRootConstantBufferView(1, transformationMatrixResourceSprite->GetGPUVirtualAddress());
 
-			commandList->IASetIndexBuffer(&indexBufferViewSprite);//IBVを設定
+			//commandList->IASetIndexBuffer(&indexBufferViewSprite);//IBVを設定
 			
 			//描画（DrawCall）６個のインデックスを使用し１つのインスタンスを描画
 			//commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);

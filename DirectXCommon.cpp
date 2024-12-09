@@ -488,3 +488,15 @@ void DirectXCommon::InitializeScissorRect()
 	scissorRect_.top = 0;
 	scissorRect_.bottom = WinApp::kClientHeight;
 }
+
+void DirectXCommon::CreateDXCCompiler()
+{
+	hr_ = DxcCreateInstance(CLSID_DxcUtils, IID_PPV_ARGS(&dxcUtils_));
+	assert(SUCCEEDED(hr_));
+	hr_ = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(&dxcCompiler_));
+	assert(SUCCEEDED(hr_));
+
+	//Œ»Žž“_‚Åinclude‚µ‚È‚¢‚ªAinclude‚É‘Î‰ž‚·‚é‚½‚ß‚ÌÝ’è‚ðs‚Á‚Ä‚¨‚­
+	hr_ = dxcUtils_->CreateDefaultIncludeHandler(&includeHandler_);
+	assert(SUCCEEDED(hr_));
+}

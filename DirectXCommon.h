@@ -86,6 +86,11 @@ public:
 	/// </summary>
 	void InitializeScissorRect();
 
+	/// <summary>
+	/// DXCコンパイラの生成
+	/// </summary>
+	void CreateDXCCompiler();
+
 private:
 	
 	HRESULT hr_;
@@ -134,8 +139,13 @@ private:
 	//ビューポートを生成
 	D3D12_VIEWPORT viewport_{};
 
-
 	//シザーを作成
 	D3D12_RECT scissorRect_{};
+
+	//dxCompilerを初期化
+	IDxcCompiler3* dxcCompiler_ = nullptr;
+
+	//インクルードハンドラー
+	IDxcIncludeHandler* includeHandler = nullptr;
 };
 

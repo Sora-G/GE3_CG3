@@ -231,7 +231,7 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	return shaderBlob;
 }
 
-ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(ID3D12Device* device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectXCommon::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible)
 {
 	//ディスクリプタヒープを生成する
 	ID3D12DescriptorHeap* descriptorHeap = nullptr;
@@ -239,7 +239,7 @@ ID3D12DescriptorHeap* DirectXCommon::CreateDescriptorHeap(ID3D12Device* device, 
 	descriptorHeapDesc.Type = heapType;//レンダーターゲットビュー用
 	descriptorHeapDesc.NumDescriptors = numDescriptors;//ダブルバッファように２つ、多くても構わない
 	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	HRESULT hr = device->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+	HRESULT hr = device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
 	//ディスクリプタヒープが作れなかったので起動できない
 	assert(SUCCEEDED(hr));
 	return descriptorHeap;

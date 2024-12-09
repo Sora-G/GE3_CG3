@@ -4,7 +4,7 @@
 #include "Logger.h"
 #include "StringUtility.h"
 #include <dxcapi.h>
-#include "string"
+#include "string.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -454,4 +454,17 @@ void DirectXCommon::InitializeDSV()
 	//DSVHeapの先頭にDSVをつくる
 	device_->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
 
+}
+
+void DirectXCommon::InitializeFence()
+{
+	//初期値0でFenceを作る
+	fence_ = nullptr;
+	uint64_t fenceValue = 0;
+	hr_ = device_->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
+	assert(SUCCEEDED(hr_));
+
+	//fenceのsignalを待つためのイベントを作成する
+	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent != nullptr);
 }

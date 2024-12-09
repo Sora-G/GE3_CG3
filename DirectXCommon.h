@@ -71,6 +71,11 @@ public:
 	/// </summary>
 	void InitializeDSV();
 
+	/// <summary>
+	/// ƒtƒFƒ“ƒX‚Ì‰Šú‰»
+	/// </summary>
+	void InitializeFence();
+
 private:
 	
 	HRESULT hr_;
@@ -113,5 +118,6 @@ private:
 	//RTV‚Ì¶¬
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
+	ID3D12Fence* fence_;
 };
 

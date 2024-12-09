@@ -34,6 +34,9 @@
     <Filter Include="Logger">
       <UniqueIdentifier>{29274079-cd2e-4328-aca1-902c7c49118f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="StringUtility">
+      <UniqueIdentifier>{dee3479d-a93e-4bfa-aced-7bc8f1eb8b56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtility.cpp">
+      <Filter>StringUtility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="StringUtility.h">
+      <Filter>StringUtility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

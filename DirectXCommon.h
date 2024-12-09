@@ -19,8 +19,8 @@ private:
 	HRESULT hr;
 
 	//DXGIファクトリーの生成
-	IDXGIFactory7* dxgiFactory = nullptr;
+	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory = nullptr;
 	//デバイスの生成
-	ID3D12Device* device = nullptr;
+	Microsoft::WRL::ComPtr<ID3D12Device> device = nullptr;
 };
 

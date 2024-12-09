@@ -76,6 +76,11 @@ public:
 	/// </summary>
 	void InitializeFence();
 
+	/// <summary>
+	/// ビューポート短形の初期化
+	/// </summary>
+	void InitializeViewportRect();
+
 private:
 	
 	HRESULT hr_;
@@ -118,6 +123,10 @@ private:
 	//RTVの生成
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
+	//フェンスの生成
 	ID3D12Fence* fence_;
+
+	//ビューポート
+	D3D12_VIEWPORT viewport_{};
 };
 

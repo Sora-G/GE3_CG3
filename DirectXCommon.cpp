@@ -468,3 +468,14 @@ void DirectXCommon::InitializeFence()
 	HANDLE fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 	assert(fenceEvent != nullptr);
 }
+
+void DirectXCommon::InitializeViewportRect()
+{
+	//クライアント領域のサイズと一緒にして画面全体に表示
+	viewport_.Width = WinApp::kClientWidth;
+	viewport_.Height = WinApp::kClientHeight;
+	viewport_.TopLeftX = 0;
+	viewport_.TopLeftY = 0;
+	viewport_.MinDepth = 0.0f;
+	viewport_.MaxDepth = 1.0f;
+}

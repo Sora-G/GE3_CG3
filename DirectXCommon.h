@@ -14,6 +14,9 @@ public:
 	//デバイスの初期化
 	void InitializeDevice();
 
+	//コマンド関連の初期化
+	void InitializeCommand();
+
 private:
 	
 	HRESULT hr;
@@ -22,5 +25,11 @@ private:
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory = nullptr;
 	//デバイスの生成
 	Microsoft::WRL::ComPtr<ID3D12Device> device = nullptr;
+	//コマンドアロケーターの生成
+ 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator = nullptr;
+	//コマンドリストの生成
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList = nullptr;
+	//コマンドキューの生成
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue = nullptr;
 };
 

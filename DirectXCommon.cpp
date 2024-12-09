@@ -1,6 +1,8 @@
 #include "DirectXCommon.h"
 #include <cassert>
 #include <format>
+#include "Logger.h"
+#include "StringUtility.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -54,7 +56,7 @@ void DirectXCommon::InitializeDevice()
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
 		{
 			//採用したアダプタの情報をログに出力　wstringの方なので注意
-			Log(std::format(L"Use Adapter:{}\n", adapterDesc.Description));
+			Logger::Log(StringUtility::ConvertString(std::format(L"Use Adapter:{}\n", adapterDesc.Description)));
 			break;
 		}
 		useAdapter = nullptr;//ソフトウェアアダプタの場合は見なかったことにする
@@ -77,14 +79,14 @@ void DirectXCommon::InitializeDevice()
 		if (SUCCEEDED(hr))
 		{
 			//生成できたのでログ出力を行ってループを抜ける
-			Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
+			Logger::Log(std::format("FeatureLevel : {}\n", featureLevelStrings[i]));
 			break;
 		}
 	}
 
 	//デバイスの生成が上手くいかなかったので起動できない
 	assert(device != nullptr);
-	Log("Comprete Create D3D12Device!\n");
+	Logger::Log("Comprete Create D3D12Device!\n");
 
 
 #ifdef _DEBUG
@@ -119,4 +121,23 @@ void DirectXCommon::InitializeDevice()
 	}
 
 #endif // DEBUG
+}
+
+void DirectXCommon::InitializeCommand()
+{
+	//コマンドアロケーターを生成する
+	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+	//コマンドアロケーターの生成がうまくいかなかったので起動できない
+	assert(SUCCEEDED(hr));
+
+	//コマンドリストを生成する
+	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList));
+	//コマンドリストの生成がうまくいかなかったので起動できない
+	assert(SUCCEEDED(hr));
+
+	//コマンドキューを生成する
+	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
+	hr = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
+	//コマンドキューの生成がうまくいかなかったので起動できない
+	assert(SUCCEEDED(hr));
 }

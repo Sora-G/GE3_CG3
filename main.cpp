@@ -403,19 +403,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	dxCommon = new DirectXCommon();
 	dxCommon->Initialize();
 
-	//スワップチェインを生成する
-	IDXGISwapChain4* swapChain = nullptr;						
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};						
-	swapChainDesc.Width = WinApp::kClientWidth;					//画面の幅　ウィンドウのクライアント領域を同じものにしておく				
-	swapChainDesc.Height = WinApp::kClientHeight;				//画面の高さ　ウィンドウのクライアント領域を同じものにしておく
-	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;			//色の形式
-	swapChainDesc.SampleDesc.Count = 1;							//マルチサンプルしない
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;//描画のターゲットとして利用する
-	swapChainDesc.BufferCount = 2;								//ダブルバッファ
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	//モニタにうつしたら中身を破棄
-	//コマンドキュー、ウィンドウバンドル、設定を渡して生成する
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue, winApp->GetHwnd() , &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(&swapChain));
-	assert(SUCCEEDED(hr));
+
 
 
 	//ディスクリプタヒープを生成する

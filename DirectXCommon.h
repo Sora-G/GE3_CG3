@@ -5,6 +5,9 @@
 #include <wrl.h>
 #include "WinApp.h"
 #include "array"
+#include "iostream"
+#include "string.h"
+
 
 class DirectXCommon
 {

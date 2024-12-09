@@ -28,6 +28,9 @@
     <Filter Include="WinApp">
       <UniqueIdentifier>{86509daf-3b45-4e8e-9d44-526b147563d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DirectXCommon">
+      <UniqueIdentifier>{7a44ba2e-b5c4-4db4-9e0f-f60d77576ad6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="WinApp.cpp">
       <Filter>WinApp</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXCommon.cpp">
+      <Filter>DirectXCommon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="WinApp.h">
       <Filter>WinApp</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXCommon.h">
+      <Filter>DirectXCommon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

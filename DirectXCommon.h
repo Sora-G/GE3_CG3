@@ -39,6 +39,9 @@ public:
 	//深度バッファの生成
 	void CreateDepthStencil();
 
+	//各種デスクリプタヒープの生成
+	void CreateDescriptorHeap();
+
 private:
 	
 	HRESULT hr_;
@@ -60,5 +63,15 @@ private:
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;
 	IDxcIncludeHandler* includeHandler_;
+
+	//デスクリプタのサイズ
+	uint32_t descriptorSizeSRV_;
+	uint32_t descriptorSizeRTV_;
+	uint32_t descriptorSizeDSV_;
+
+	ID3D12DescriptorHeap* srvDescriptorHeap_;
+	ID3D12DescriptorHeap* rtvDescriptorHeap_;
+	ID3D12DescriptorHeap* dsvDescriptorHeap_;
+
 };
 

@@ -10,24 +10,24 @@ class DirectXCommon
 {
 public:
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Initialize();
 	
-	//ƒfƒoƒCƒX‚Ì‰Šú‰»
+	//ãƒ‡ãƒã‚¤ã‚¹ã®åˆæœŸåŒ–
 	void InitializeDevice();
 
-	//ƒRƒ}ƒ“ƒhŠÖ˜A‚Ì‰Šú‰»
+	//ã‚³ãƒãƒ³ãƒ‰é–¢é€£ã®åˆæœŸåŒ–
 	void InitializeCommand();
 
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆ
 	void CreateSwapChain();
 
 	IDxcBlob* CompileShader(
-		//Compiler‚·‚éShaderƒtƒ@ƒCƒ‹‚Ö‚ÌƒpƒX
+		//Compilerã™ã‚‹Shaderãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹
 		const std::wstring& filePath,
-		//Compiler‚Ég—p‚·‚éProfile
+		//Compilerã«ä½¿ç”¨ã™ã‚‹Profile
 		const wchar_t* profile,
-		//‰Šú‰»‚Å¶¬‚µ‚½•¨‚ğ‚R‚Â
+		//åˆæœŸåŒ–ã§ç”Ÿæˆã—ãŸç‰©ã‚’ï¼“ã¤
 		IDxcUtils* dxcUtils,
 		IDxcCompiler3* dxcCompiler,
 		IDxcIncludeHandler* includeHandler
@@ -37,62 +37,62 @@ public:
 
 	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
 
-	//[“xƒoƒbƒtƒ@‚Ì¶¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	void CreateDepthStencil();
 
-	//ŠeíƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬
+	//å„ç¨®ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ç”Ÿæˆ
 	void CreateDescriptorHeap();
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ì‰Šú‰»
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®åˆæœŸåŒ–
 	void InitializeRenderTargetView();
 
 	/// <summary>
-	/// w’è”Ô†‚ÌCPUƒfƒXƒNƒŠƒvƒ^ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+	/// æŒ‡å®šç•ªå·ã®CPUãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
 	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 	/// <summary>
-	/// w’è”Ô†‚ÌGPUƒfƒXƒNƒŠƒvƒ^ƒnƒ“ƒhƒ‹‚ğæ“¾‚·‚é
+	/// æŒ‡å®šç•ªå·ã®GPUãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
 	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 	/// <summary>
-	/// SRVw’è”Ô†‚ÌCPUƒfƒXƒNƒŠƒvƒ^ƒnƒ“ƒhƒ‹‚¤æ“¾‚·‚é
+	/// SRVæŒ‡å®šç•ªå·ã®CPUãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒãƒ³ãƒ‰ãƒ«ã†å–å¾—ã™ã‚‹
 	/// </summary>
 	D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPUDescriptorHandle(uint32_t index);
 
 	/// <summary>
-	/// SRVw’è”Ô†‚ÌGPUƒfƒXƒNƒŠƒvƒ^ƒnƒ“ƒhƒ‹‚¤æ“¾‚·‚é
+	/// SRVæŒ‡å®šç•ªå·ã®GPUãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒãƒ³ãƒ‰ãƒ«ã†å–å¾—ã™ã‚‹
 	/// </summary>
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPUDescriptorHandle(uint32_t index);
 
 	/// <summary>
-	/// [“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ì‰Šú‰»
+	/// æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeDSV();
 
 	/// <summary>
-	/// ƒtƒFƒ“ƒX‚Ì‰Šú‰»
+	/// ãƒ•ã‚§ãƒ³ã‚¹ã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeFence();
 
 	/// <summary>
-	/// ƒrƒ…[ƒ|[ƒg’ZŒ`‚Ì‰Šú‰»
+	/// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆçŸ­å½¢ã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeViewportRect();
 
 	/// <summary>
-	/// ƒVƒUƒŠƒ“ƒO’ZŒ`‚Ì‰Šú‰»
+	/// ã‚·ã‚¶ãƒªãƒ³ã‚°çŸ­å½¢ã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeScissorRect();
 
 	/// <summary>
-	/// DXCƒRƒ“ƒpƒCƒ‰‚Ì¶¬
+	/// DXCã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã®ç”Ÿæˆ
 	/// </summary>
 	void CreateDXCCompiler();
 
 	/// <summary>
-	/// ImGui‚Ì‰Šú‰»
+	/// ImGuiã®åˆæœŸåŒ–
 	/// </summary>
 	void InitializeImGui();
 
@@ -101,19 +101,19 @@ private:
 	HRESULT hr_;
 	//WindowsAPI
 	WinApp* winApp_ = nullptr;
-	//DXGIƒtƒ@ƒNƒgƒŠ[‚Ì¶¬
+	//DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_ = nullptr;
-	//ƒfƒoƒCƒX‚Ì¶¬
+	//ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<ID3D12Device> device_ = nullptr;
-	//ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^[‚Ì¶¬
+	//ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ãƒ¼ã®ç”Ÿæˆ
  	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ì¶¬
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
-	//ƒRƒ}ƒ“ƒhƒLƒ…[‚Ì¶¬
+	//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆ
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
-	//ƒXƒƒbƒvƒ`ƒFƒCƒ“‚ğ¶¬‚·‚é
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ã‚¤ãƒ³ã‚’ç”Ÿæˆã™ã‚‹
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	IDxcUtils* dxcUtils_;
@@ -122,9 +122,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>depthStencilResource_;
 
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
-
-	//ƒfƒXƒNƒŠƒvƒ^‚ÌƒTƒCƒY
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ã®ã‚µã‚¤ã‚º
 	uint32_t descriptorSizeSRV_;
 	uint32_t descriptorSizeRTV_;
 	uint32_t descriptorSizeDSV_;
@@ -133,26 +131,26 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvDescriptorHeap_;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
 
-	//SwapChain‚©‚çResource‚ğˆø‚Á’£‚Á‚Ä‚­‚é
+	//SwapChainã‹ã‚‰Resourceã‚’å¼•ã£å¼µã£ã¦ãã‚‹
 	//ID3D12Resource* swapChainResources_[2] = { nullptr };
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, 2>swapChainResources_;
 
-	//RTV‚Ì¶¬
+	//RTVã®ç”Ÿæˆ
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
-	//ƒtƒFƒ“ƒX‚Ì¶¬
+	//ãƒ•ã‚§ãƒ³ã‚¹ã®ç”Ÿæˆ
 	ID3D12Fence* fence_;
 
-	//ƒrƒ…[ƒ|[ƒg‚ğ¶¬
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã‚’ç”Ÿæˆ
 	D3D12_VIEWPORT viewport_{};
 
-	//ƒVƒU[‚ğì¬
+	//ã‚·ã‚¶ãƒ¼ã‚’ä½œæˆ
 	D3D12_RECT scissorRect_{};
 
-	//dxCompiler‚ğ‰Šú‰»
+	//dxCompilerã‚’åˆæœŸåŒ–
 	IDxcCompiler3* dxcCompiler_ = nullptr;
 
-	//ƒCƒ“ƒNƒ‹[ƒhƒnƒ“ƒhƒ‰[
+	//ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒãƒ³ãƒ‰ãƒ©ãƒ¼
 	IDxcIncludeHandler* includeHandler = nullptr;
 };
 

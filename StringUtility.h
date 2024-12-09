@@ -2,9 +2,9 @@
 #include <string>
 
 namespace StringUtility {
-	//string‚ğwstring‚É•Ï‚¦‚é
+	//stringã‚’wstringã«å¤‰ãˆã‚‹
 	std::wstring ConvertString(const std::string& str);
-	//wstring‚ğstring‚É•Ï‚¦‚é
+	//wstringã‚’stringã«å¤‰ãˆã‚‹
 	std::string ConvertString(const std::wstring& str);
 }
 

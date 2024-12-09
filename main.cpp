@@ -16,6 +16,7 @@
 #include "wrl.h"
 #include "WinApp.h"
 #include "externals/imgui/imgui_impl_win32.h"
+#include "DirectXCommon.h"
 
 //libのリンク
 #pragma comment(lib,"d3d12.lib")
@@ -453,6 +454,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	input = new Input();
 	input->Initialize(winApp);
 
+	//ポインタ
+	DirectXCommon* dxCommon = nullptr;
+	//dxCommonの初期化
+	dxCommon = new DirectXCommon();
+	dxCommon->Initialize();
 
 	//DXGIファクトリーの生成
 	IDXGIFactory7* dxgiFactory = nullptr;
@@ -1227,6 +1233,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+
+	//DirectXの解放
+	delete dxCommon;
 
 	//入力開放
 	delete input;

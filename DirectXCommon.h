@@ -42,6 +42,9 @@ public:
 	//各種デスクリプタヒープの生成
 	void CreateDescriptorHeap();
 
+	//レンダーターゲットビューの初期化
+	void InitializeRenderTargetView();
+
 private:
 	
 	HRESULT hr_;
@@ -69,9 +72,15 @@ private:
 	uint32_t descriptorSizeRTV_;
 	uint32_t descriptorSizeDSV_;
 
-	ID3D12DescriptorHeap* srvDescriptorHeap_;
-	ID3D12DescriptorHeap* rtvDescriptorHeap_;
-	ID3D12DescriptorHeap* dsvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvDescriptorHeap_;
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
+
+	//SwapChainからResourceを引っ張ってくる
+	ID3D12Resource* swapChainResources_[2] = { nullptr };
+
+	//RTVの生成
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
 };
 

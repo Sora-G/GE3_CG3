@@ -25,7 +25,7 @@ private:
 	
 	HRESULT hr;
 	//WindowsAPI
-	WinApp* winapp = nullptr;
+	WinApp* winApp = nullptr;
 	//DXGIファクトリーの生成
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory = nullptr;
 	//デバイスの生成

@@ -11,6 +11,10 @@ using namespace Microsoft::WRL;
 
 void DirectXCommon::Initialize()
 {
+	//NULL検出
+	assert(winApp);
+	//メンバ変数に記録
+	this->winApp = winApp;
 }
 
 void DirectXCommon::InitializeDevice()
@@ -154,6 +158,6 @@ void DirectXCommon::CreateSwapChain()
 	swapChainDesc.BufferCount = 2;								//ダブルバッファ
 	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;	//モニタにうつしたら中身を破棄
 	//コマンドキュー、ウィンドウバンドル、設定を渡して生成する
-	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), winapp->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(swapChain.Get()));
+	hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), winApp->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(swapChain.Get()));
 	assert(SUCCEEDED(hr));
 }

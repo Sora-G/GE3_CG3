@@ -31,6 +31,9 @@
     <Filter Include="DirectXCommon">
       <UniqueIdentifier>{7a44ba2e-b5c4-4db4-9e0f-f60d77576ad6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{29274079-cd2e-4328-aca1-902c7c49118f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="DirectXCommon.cpp">
       <Filter>DirectXCommon</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Logger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="DirectXCommon.h">
       <Filter>DirectXCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Logger</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

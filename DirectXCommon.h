@@ -81,6 +81,11 @@ public:
 	/// </summary>
 	void InitializeViewportRect();
 
+	/// <summary>
+	/// シザリング短形の初期化
+	/// </summary>
+	void InitializeScissorRect();
+
 private:
 	
 	HRESULT hr_;
@@ -126,7 +131,11 @@ private:
 	//フェンスの生成
 	ID3D12Fence* fence_;
 
-	//ビューポート
+	//ビューポートを生成
 	D3D12_VIEWPORT viewport_{};
+
+
+	//シザーを作成
+	D3D12_RECT scissorRect_{};
 };
 

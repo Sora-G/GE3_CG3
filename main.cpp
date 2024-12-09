@@ -504,14 +504,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//単位行列を書き込んでおく
 	*transformationMatrixDataSprite = MakeIdentity4x4();
 
-	//シザーを作成
-	D3D12_RECT scissorRect{};
-	//基本的にビューポートと同じ短径が構成されるようにする
-	scissorRect.left = 0;
-	scissorRect.right = WinApp::kClientWidth;
-	scissorRect.top = 0;
-	scissorRect.bottom = WinApp::kClientHeight;
-
 
 	//ImGuiの初期化
 	IMGUI_CHECKVERSION();

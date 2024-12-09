@@ -479,3 +479,12 @@ void DirectXCommon::InitializeViewportRect()
 	viewport_.MinDepth = 0.0f;
 	viewport_.MaxDepth = 1.0f;
 }
+
+void DirectXCommon::InitializeScissorRect()
+{
+	//基本的にビューポートと同じ短径が構成されるようにする
+	scissorRect_.left = 0;
+	scissorRect_.right = WinApp::kClientWidth;
+	scissorRect_.top = 0;
+	scissorRect_.bottom = WinApp::kClientHeight;
+}

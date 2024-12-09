@@ -4,6 +4,7 @@
 #include <dxgi1_6.h>
 #include <wrl.h>
 #include "WinApp.h"
+#include "array"
 
 class DirectXCommon
 {
@@ -45,6 +46,28 @@ public:
 	//レンダーターゲットビューの初期化
 	void InitializeRenderTargetView();
 
+	/// <summary>
+	/// 指定番号のCPUデスクリプタハンドルを取得する
+	/// </summary>
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	/// <summary>
+	/// 指定番号のGPUデスクリプタハンドルを取得する
+	/// </summary>
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	/// <summary>
+	/// SRV指定番号のCPUデスクリプタハンドルう取得する
+	/// </summary>
+	D3D12_CPU_DESCRIPTOR_HANDLE GetSRVCPUDescriptorHandle(uint32_t index);
+
+	/// <summary>
+	/// SRV指定番号のGPUデスクリプタハンドルう取得する
+	/// </summary>
+	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPUDescriptorHandle(uint32_t index);
+
+
+
 private:
 	
 	HRESULT hr_;
@@ -67,6 +90,8 @@ private:
 	IDxcCompiler3* dxcCompiler_;
 	IDxcIncludeHandler* includeHandler_;
 
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
+
 	//デスクリプタのサイズ
 	uint32_t descriptorSizeSRV_;
 	uint32_t descriptorSizeRTV_;
@@ -77,7 +102,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
 
 	//SwapChainからResourceを引っ張ってくる
-	ID3D12Resource* swapChainResources_[2] = { nullptr };
+	//ID3D12Resource* swapChainResources_[2] = { nullptr };
+	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, 2>swapChainResources_;
 
 	//RTVの生成
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};

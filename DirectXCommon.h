@@ -91,6 +91,11 @@ public:
 	/// </summary>
 	void CreateDXCCompiler();
 
+	/// <summary>
+	/// ImGuiの初期化
+	/// </summary>
+	void InitializeImGui();
+
 private:
 	
 	HRESULT hr_;
@@ -108,6 +113,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
 	//スワップチェーンの生成
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_ = nullptr;
+	//スワップチェインを生成する
+	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;

@@ -66,7 +66,10 @@ public:
 	/// </summary>
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSRVGPUDescriptorHandle(uint32_t index);
 
-
+	/// <summary>
+	/// 深度ステンシルビューの初期化
+	/// </summary>
+	void InitializeDSV();
 
 private:
 	
@@ -89,6 +92,8 @@ private:
 	IDxcUtils* dxcUtils_;
 	IDxcCompiler3* dxcCompiler_;
 	IDxcIncludeHandler* includeHandler_;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource>depthStencilResource_;
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvDescriptorHeap_;
 

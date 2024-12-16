@@ -180,6 +180,10 @@ void DirectXCommon::CreateSwapChain()
 
 IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler)
 {
+	dxcUtils_ = dxcUtils;
+	dxcCompiler_ = dxcCompiler;
+	includeHandler_ = includeHandler;
+
 	//1.hlslファイルを読む
 	//これからシェーダをコンパイルする旨をログに出す
 	Logger::Log(StringUtility::ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));

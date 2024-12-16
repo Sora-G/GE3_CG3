@@ -208,10 +208,10 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	IDxcResult* shaderResult = nullptr;
 	hr = dxcCompiler_->Compile
 	(
-		&shaderSourceBuffer,		//読み込んだファイル
-		arguments,					//コンパイルオプション
-		_countof(arguments),		//コンパイルオプションの数
-		includeHandler_.Get(),				//includeが含まれた諸々
+		&shaderSourceBuffer,				//読み込んだファイル
+		arguments,						//コンパイルオプション
+		_countof(arguments),			//コンパイルオプションの数
+		includeHandler_.Get(),		//includeが含まれた諸々
 		IID_PPV_ARGS(&shaderResult)	//コンパイル結果
 	);
 	//コンパイルエラーではなくdxcが起動できないなど致命的な状況

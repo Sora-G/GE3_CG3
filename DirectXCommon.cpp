@@ -178,18 +178,14 @@ void DirectXCommon::CreateSwapChain()
 	assert(SUCCEEDED(hr_));
 }
 
-IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar_t* profile, IDxcUtils* dxcUtils, IDxcCompiler3* dxcCompiler, IDxcIncludeHandler* includeHandler)
+IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar_t* profile)
 {
-	dxcUtils_ = dxcUtils;
-	dxcCompiler_ = dxcCompiler;
-	includeHandler_ = includeHandler;
-
 	//1.hlslファイルを読む
 	//これからシェーダをコンパイルする旨をログに出す
 	Logger::Log(StringUtility::ConvertString(std::format(L"Begin CompileShader, path:{},profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-	HRESULT hr = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
+	HRESULT hr = dxcUtils_->LoadFile(filePath.c_str(), nullptr, &shaderSource);
 	//読めなかったら止める
 	assert(SUCCEEDED(hr));
 	//読み込んだファイルの内容を設定する
@@ -210,12 +206,12 @@ IDxcBlob* DirectXCommon::CompileShader(const std::wstring& filePath, const wchar
 	};
 	//実際にshaderをコンパイルする
 	IDxcResult* shaderResult = nullptr;
-	hr = dxcCompiler->Compile
+	hr = dxcCompiler_->Compile
 	(
 		&shaderSourceBuffer,		//読み込んだファイル
 		arguments,					//コンパイルオプション
 		_countof(arguments),		//コンパイルオプションの数
-		includeHandler,				//includeが含まれた諸々
+		includeHandler_.Get(),				//includeが含まれた諸々
 		IID_PPV_ARGS(&shaderResult)	//コンパイル結果
 	);
 	//コンパイルエラーではなくdxcが起動できないなど致命的な状況
@@ -381,10 +377,10 @@ void DirectXCommon::CreateDepthStencil()
 	assert(SUCCEEDED(hr_));
 
 	//shaderをコンパイルする
-	IDxcBlob* vertexShaderBlob = CompileShader(L"resources/shaders/Object3d.VS.hlsl", L"vs_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
+	IDxcBlob* vertexShaderBlob = CompileShader(L"resources/shaders/Object3d.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
 
-	IDxcBlob* pixelShaderBlob = CompileShader(L"resources/shaders/Object3d.PS.hlsl", L"ps_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
+	IDxcBlob* pixelShaderBlob = CompileShader(L"resources/shaders/Object3d.PS.hlsl", L"ps_6_0");
 	assert(pixelShaderBlob != nullptr);
 
 

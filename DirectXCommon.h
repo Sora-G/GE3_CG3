@@ -32,11 +32,7 @@ public:
 		//CompilerするShaderファイルへのパス
 		const std::wstring& filePath,
 		//Compilerに使用するProfile
-		const wchar_t* profile,
-		//初期化で生成した物を３つ
-		IDxcUtils* dxcUtils,
-		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler
+		const wchar_t* profile
 	);
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
@@ -122,9 +118,9 @@ private:
 	//スワップチェインを生成する
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
 
-	IDxcUtils* dxcUtils_;
-	IDxcCompiler3* dxcCompiler_;
-	IDxcIncludeHandler* includeHandler_;
+	Microsoft::WRL::ComPtr<IDxcUtils> dxcUtils_ = nullptr;
+	Microsoft::WRL::ComPtr<IDxcCompiler3> dxcCompiler_ = nullptr;
+	Microsoft::WRL::ComPtr<IDxcIncludeHandler> includeHandler_ = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource>depthStencilResource_;
 

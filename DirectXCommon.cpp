@@ -14,12 +14,12 @@
 
 using namespace Microsoft::WRL;
 
-void DirectXCommon::Initialize()
+void DirectXCommon::Initialize(WinApp* winApp)
 {
 	//NULL検出
-	assert(winApp_);
+	assert(winApp);
 	//メンバ変数に記録
-	this->winApp_ = winApp_;
+	this->winApp_ = winApp;
 
 	InitializeDevice();
 	InitializeCommand();
@@ -53,7 +53,7 @@ void DirectXCommon::InitializeDevice()
 	//メインスレッドではMTAでCOM利用
 	HRESULT hr = CoInitializeEx(0, COINIT_MULTITHREADED);
 
-	//HRESULTはWindows系のエラーコードであり
+	//HRESULTはWindows系のエラーコードでありzz
 	//関数が成功したかどうかをSUCCEEDEDマクロで判定できる
 	hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
 
@@ -381,10 +381,10 @@ void DirectXCommon::CreateDepthStencil()
 	assert(SUCCEEDED(hr_));
 
 	//shaderをコンパイルする
-	IDxcBlob* vertexShaderBlob = CompileShader(L"resources/shaders/Object3D.VS.hlsl", L"vs_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
+	IDxcBlob* vertexShaderBlob = CompileShader(L"resources/shaders/Object3d.VS.hlsl", L"vs_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
 	assert(vertexShaderBlob != nullptr);
 
-	IDxcBlob* pixelShaderBlob = CompileShader(L"resources/shaders/Object3D.PS.hlsl", L"ps_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
+	IDxcBlob* pixelShaderBlob = CompileShader(L"resources/shaders/Object3d.PS.hlsl", L"ps_6_0", dxcUtils_, dxcCompiler_, includeHandler_);
 	assert(pixelShaderBlob != nullptr);
 
 

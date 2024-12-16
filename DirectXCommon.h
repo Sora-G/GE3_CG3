@@ -6,7 +6,10 @@
 #include "WinApp.h"
 #include "array"
 #include "iostream"
-#include "string.h"
+#include <string>
+#include "dxcapi.h"
+
+#pragma comment(lib,"dxcompiler.lib")
 
 
 class DirectXCommon
@@ -14,7 +17,7 @@ class DirectXCommon
 public:
 
 	//初期化
-	void Initialize();
+	void Initialize(WinApp* winApp);
 	
 	//デバイスの初期化
 	void InitializeDevice();
@@ -150,10 +153,10 @@ private:
 	//シザーを作成
 	D3D12_RECT scissorRect_{};
 
-	//dxCompilerを初期化
-	IDxcCompiler3* dxcCompiler_ = nullptr;
+	////dxCompilerを初期化
+	//IDxcCompiler3* dxcCompiler_ = nullptr;
 
-	//インクルードハンドラー
-	IDxcIncludeHandler* includeHandler = nullptr;
+	////インクルードハンドラー
+	//IDxcIncludeHandler* includeHandler_ = nullptr;
 };
 

@@ -11,6 +11,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
+class WinApp;
 
 class DirectXCommon
 {
@@ -122,7 +123,7 @@ private:
 	Microsoft::WRL::ComPtr<IDxcCompiler3> dxcCompiler_ = nullptr;
 	Microsoft::WRL::ComPtr<IDxcIncludeHandler> includeHandler_ = nullptr;
 
-	Microsoft::WRL::ComPtr<ID3D12Resource>depthStencilResource_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource_;
 
 	//デスクリプタのサイズ
 	uint32_t descriptorSizeSRV_;

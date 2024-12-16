@@ -497,7 +497,6 @@ void DirectXCommon::InitializeDSV()
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 	//DSVHeapの先頭にDSVをつくる
 	device_->CreateDepthStencilView(depthStencilResource_.Get(), &dsvDesc, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
-
 }
 
 void DirectXCommon::InitializeFence()

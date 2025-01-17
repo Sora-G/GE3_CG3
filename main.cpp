@@ -49,6 +49,12 @@ struct VertexData
 	Vector3 normal;
 };
 
+struct Material
+{
+	Vector4 color;
+	int32_t enabaleLighting;
+};
+
 struct Transform
 {
 	Vector3 scale;
@@ -1006,7 +1012,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//マテリアル用のリソースを作る　今回はcolor１つ分のサイズを用意する
 	ID3D12Resource* materialResource = CreateBufferResource(device, sizeof(Vector4));
 	//マテリアルにデータを読み込む
-	Vector4* materialData = nullptr;
+	Material* materialData = nullptr;
 
 	Matrix4x4* transformationMatrixData = nullptr;
 
@@ -1016,8 +1022,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
 
 	//今回は赤を書き込んでみる
-	*materialData = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-
+	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	materialData->enabaleLighting = false;
 
 
 	////頂点バッファービューを生成
@@ -1245,7 +1251,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			ImGui::NewFrame();
 
 			ImGui::Begin("Window");
-			ImGui::ColorEdit3("color", &materialData->x);
+			ImGui::ColorEdit3("color", &materialData->color.x);
 			//ImGui::DragFloat3("rotateSprite", &transformSprite.rotate.x, 1.0f);
 			//ImGui::DragFloat3("translationSprite", &transformSprite.translate.x, 1.0f);
 			//ImGui::DragFloat3("rotateScale", &transformSprite.scale.x, 1.0f);

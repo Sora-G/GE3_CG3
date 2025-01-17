@@ -1177,7 +1177,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	//Textureを呼んで転送する
-	DirectX::ScratchImage mipImages = LoadTexture("resources/uvChecker.png");
+	DirectX::ScratchImage mipImages = LoadTexture("resources/monsterBall.png");
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	ID3D12Resource* textureResource = CreateTextureResource(device, metadata);
 	UploadTextureData(textureResource, mipImages);
@@ -1203,11 +1203,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	device->CreateShaderResourceView(textureResource, &srvDesc, textureSrvHandleCPU);
 
 	//Transform変数の作成
-	Transform transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	Transform transform = { {1.0f,1.0f,1.0f},{0.0f,4.7f,0.0f},{0.0f,-0.5f,5.0f} };
 	Transform transformSprite{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f} };
 
 	//camera変数の作成
-	Transform cameraTransform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
+	Transform cameraTransform{ {1.0f,1.0f,1.0f},{0.7f,0.0f,0.0f},{0.0f,9.0f,-5.0f} };
 
 
 	MSG msg{};
@@ -1231,13 +1231,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			ImGui::Begin("Window");
 			ImGui::ColorEdit3("color", &materialData->x);
-			ImGui::DragFloat3("rotateSprite", &transformSprite.rotate.x, 1.0f);
-			ImGui::DragFloat3("translationSprite", &transformSprite.translate.x, 1.0f);
-			ImGui::DragFloat3("rotateScale", &transformSprite.scale.x, 1.0f);
+			//ImGui::DragFloat3("rotateSprite", &transformSprite.rotate.x, 1.0f);
+			//ImGui::DragFloat3("translationSprite", &transformSprite.translate.x, 1.0f);
+			//ImGui::DragFloat3("rotateScale", &transformSprite.scale.x, 1.0f);
 			ImGui::DragFloat3("rotateModel", &transform.rotate.x, 0.01f);
 			ImGui::DragFloat3("transformModel", &transform.translate.x, 0.01f);
 			ImGui::DragFloat3("scaleModel", &transform.scale.x, 0.01f);
-
+			ImGui::DragFloat3("rotateCamera", &cameraTransform.rotate.x, 0.01f);
+			ImGui::DragFloat3("translateCamera", &cameraTransform.translate.x, 0.01f);
 			ImGui::End();
 
 			//WorldViewProjectionMatrixを作る

@@ -79,6 +79,13 @@ struct TransformationMatrix
 	Matrix4x4 World;
 };
 
+struct DirectionalLight
+{
+	Vector4 color;//ライトの色
+	Vector3 direction;//ライトの向き
+	float intensity;//輝度
+};
+
 //ウィンドウプロージャ
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -746,7 +753,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	//RootParameter作成、複数配置出来るので配列　今回は結果１つの長さなので長さ１の配列
-	D3D12_ROOT_PARAMETER rootParameters[3] = {};
+	D3D12_ROOT_PARAMETER rootParameters[4] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
@@ -773,6 +780,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CBVを使う
+	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixaelShaderを使う
+	rootParameters[3].Descriptor.ShaderRegister = 1;//レジスタ番号１を使う
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -1016,6 +1027,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Matrix4x4* transformationMatrixData = nullptr;
 
+	DirectionalLight* directionalLightData = nullptr;
+
 	//書き込むためのアドレスを取得
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
@@ -1025,6 +1038,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	materialData->enabaleLighting = false;
 
+	directionalLightData->color = { 0.0f,0.0f,0.0f };
+	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
+	directionalLightData->intensity = 1.0f;
+	
 
 	////頂点バッファービューを生成
 	//D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
@@ -1260,6 +1277,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			ImGui::DragFloat3("SphereScale", &transform.scale.x, 0.01f);
 			ImGui::DragFloat3("CameraRotate", &cameraTransform.rotate.x, 0.01f);
 			ImGui::DragFloat3("CameraTranslate", &cameraTransform.translate.x, 0.01f);
+			ImGui::ColorEdit3("LightColor", &directionalLightData->color.x);
+			ImGui::DragFloat3("LightDirection", &directionalLightData->direction.x, 0.01f);
+			ImGui::DragFloat("LightIntensity", &directionalLightData->intensity, 0.01f);
 			ImGui::End();
 
 			//WorldViewProjectionMatrixを作る

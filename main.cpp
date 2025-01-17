@@ -15,6 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <wrl.h>
+#include <numbers>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -898,22 +899,72 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
 	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
 
-
-
 	//モデル読み込み
 	ModelData modelData = LoadObjFile("resources", "plane.obj");
+
+	const uint32_t kSubdivision = 16;//分割数
+	const uint32_t kVertexCount = kSubdivision * kSubdivision * 6;//球体頂点数
+
 	//頂点リソースを作る
-	ID3D12Resource* vertexResource = CreateBufferResource(device, sizeof(VertexData) * modelData.vertices.size());
+	ID3D12Resource* vertexResource = CreateBufferResource(device, sizeof(VertexData) * kVertexCount);
 	//頂点バッファーを作成する
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
+	vertexBufferView.SizeInBytes = UINT(sizeof(VertexData) * kVertexCount);
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 	//頂点リソースにデータを書き込む
 	VertexData* vertexData = nullptr;
+
 	//vertexResource->Map(0, nullptr, reinterpret_cast<void**>(vertexData));//書き込むためのアドレスを取得
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData)* modelData.vertices.size());
+
+	const float kPi = std::numbers::pi_v<float>;
+	const float kLonEvery = (2 * kPi) / float(kSubdivision);//経度分割１つ分の角度
+	const float kLatEvery = kPi / float(kSubdivision);//緯度分割１つ分の角度
+	for (uint32_t latIndex = 0; latIndex < kSubdivision; ++latIndex)
+	{
+		float lat = -kPi / 2.0f + kLatEvery * latIndex;
+		for (uint32_t lonIndex = 0; lonIndex < kSubdivision; ++lonIndex)
+		{
+			uint32_t start = (latIndex * kSubdivision + lonIndex) * 6;
+			float lon = lonIndex * kLonEvery;
+			//a
+			vertexData[start].position.x = cos(lat) * cos(lon);
+			vertexData[start].position.y = sin(lat);
+			vertexData[start].position.z = cos(lat) * sin(lon);
+			vertexData[start].position.w = 1.0f;
+			vertexData[start].texcord.x = float(lonIndex) / float(kSubdivision);
+			vertexData[start].texcord.y = 1.0f - float(latIndex) / float(kSubdivision);
+			//b
+			vertexData[start + 1].position.x = cos(lat + kLatEvery) * cos(lon);
+			vertexData[start + 1].position.y = sin(lat + kLatEvery);
+			vertexData[start + 1].position.z = cos(lat + kLatEvery) * sin(lon);
+			vertexData[start + 1].position.w = 1.0f;
+			vertexData[start + 1].texcord.x = float(lonIndex) / float(kSubdivision);
+			vertexData[start + 1].texcord.y = 1.0f - float(latIndex + 1) / float(kSubdivision);
+			//c
+			vertexData[start + 2].position.x = cos(lat) * cos(lon + kLonEvery);
+			vertexData[start + 2].position.y = sin(lat);
+			vertexData[start + 2].position.z = cos(lat) * sin(lon + kLonEvery);
+			vertexData[start + 2].position.w = 1.0f;
+			vertexData[start + 2].texcord.x = float(lonIndex + 1) / float(kSubdivision);
+			vertexData[start + 2].texcord.y = 1.0f - float(latIndex) / float(kSubdivision);
+			//c
+			vertexData[start + 3] = vertexData[start + 2];
+			//b
+			vertexData[start + 4] = vertexData[start + 1];
+			//d
+			vertexData[start + 5].position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery);
+			vertexData[start + 5].position.y = sin(lat + kLatEvery);
+			vertexData[start + 5].position.z = cos(lat + kLatEvery) * sin(lon + kLonEvery);
+			vertexData[start + 5].position.w = 1.0f;
+			vertexData[start + 5].texcord.x = float(lonIndex + 1) / float(kSubdivision);
+			vertexData[start + 5].texcord.y = 1.0f - float(latIndex + 1) / float(kSubdivision);
+
+
+		}
+	}
 
 	DirectX::ScratchImage mipImages2 = LoadTexture(modelData.material.textureFilePath);
 
@@ -1006,18 +1057,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	VertexData* vertexDataSprite = nullptr;
 	vertexResourceSprite->Map(0, nullptr, reinterpret_cast<void**>(&vertexDataSprite));
-	//左上
-	vertexDataSprite[0].position = { 0.0f,0.0f,0.0f,1.0f };
-	vertexDataSprite[0].texcord = { 0.0f,0.0f };
-	//右上
-	vertexDataSprite[1].position = { 640.0f,0.0f,0.0f,1.0f };
-	vertexDataSprite[1].texcord = { 1.0f,0.0f };
-	//左下
-	vertexDataSprite[2].position = { 0.0f,360.0f,0.0f,1.0f };
-	vertexDataSprite[2].texcord = { 0.0f,1.0f };
-	//右下
-	vertexDataSprite[3].position = { 640.0f,360.0f,0.0f,1.0f };
-	vertexDataSprite[3].texcord = { 1.0f,1.0f };
+	////左上
+	//vertexDataSprite[0].position = { 0.0f,0.0f,0.0f,1.0f };
+	//vertexDataSprite[0].texcord = { 0.0f,0.0f };
+	////右上
+	//vertexDataSprite[1].position = { 640.0f,0.0f,0.0f,1.0f };
+	//vertexDataSprite[1].texcord = { 1.0f,0.0f };
+	////左下
+	//vertexDataSprite[2].position = { 0.0f,360.0f,0.0f,1.0f };
+	//vertexDataSprite[2].texcord = { 0.0f,1.0f };
+	////右下
+	//vertexDataSprite[3].position = { 640.0f,360.0f,0.0f,1.0f };
+	//vertexDataSprite[3].texcord = { 1.0f,1.0f };
 
 
 	//Index用のResourceを作る
@@ -1087,6 +1138,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		transforms[index].rotate = { 0.0f, 0.0f, 0.0f };
 		transforms[index].translate = { index * 0.1f, index * 0.1f, index * 0.1f };
 	}
+
 
 
 	//ビューポート
@@ -1208,7 +1260,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			for (uint32_t index = 0; index < kNumInstance; ++index)
 			{
 				Matrix4x4 worldMatrix =
-					MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
+					MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 				Matrix4x4 viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
 				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
 				instancingData[index].WVP = worldViewProjectionMatrix;
@@ -1290,7 +1342,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			//commandList->DrawInstanced(6, 1, 0, 0);
 			//commandList->DrawInstanced(UINT(modelData.vertices.size()), 10, 0, 0);
 			//描画　6頂点のいたポリゴンを、KNumInstance(今回は10)だけInstance描画を行う
-			commandList->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
+			commandList->DrawInstanced(kVertexCount, kNumInstance, 0, 0);
 
 
 			////Spriteの描画。変更が必要なものだけ変更する

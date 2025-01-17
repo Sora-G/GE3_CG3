@@ -1010,7 +1010,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	//マテリアル用のリソースを作る　今回はcolor１つ分のサイズを用意する
-	ID3D12Resource* materialResource = CreateBufferResource(device, sizeof(Vector4));
+	ID3D12Resource* materialResource = CreateBufferResource(device, sizeof(Material));
 	//マテリアルにデータを読み込む
 	Material* materialData = nullptr;
 
@@ -1021,7 +1021,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
 
-	//今回は赤を書き込んでみる
+	//色は白！
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	materialData->enabaleLighting = false;
 
@@ -1251,15 +1251,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			ImGui::NewFrame();
 
 			ImGui::Begin("Window");
-			ImGui::ColorEdit3("color", &materialData->color.x);
+			ImGui::ColorEdit3("SphereColor", &materialData->color.x);
 			//ImGui::DragFloat3("rotateSprite", &transformSprite.rotate.x, 1.0f);
 			//ImGui::DragFloat3("translationSprite", &transformSprite.translate.x, 1.0f);
 			//ImGui::DragFloat3("rotateScale", &transformSprite.scale.x, 1.0f);
-			ImGui::DragFloat3("rotateModel", &transform.rotate.x, 0.01f);
-			ImGui::DragFloat3("transformModel", &transform.translate.x, 0.01f);
-			ImGui::DragFloat3("scaleModel", &transform.scale.x, 0.01f);
-			ImGui::DragFloat3("rotateCamera", &cameraTransform.rotate.x, 0.01f);
-			ImGui::DragFloat3("translateCamera", &cameraTransform.translate.x, 0.01f);
+			ImGui::DragFloat3("SphereRotate", &transform.rotate.x, 0.01f);
+			ImGui::DragFloat3("SphereTransform", &transform.translate.x, 0.01f);
+			ImGui::DragFloat3("SphereScale", &transform.scale.x, 0.01f);
+			ImGui::DragFloat3("CameraRotate", &cameraTransform.rotate.x, 0.01f);
+			ImGui::DragFloat3("CameraTranslate", &cameraTransform.translate.x, 0.01f);
 			ImGui::End();
 
 			//WorldViewProjectionMatrixを作る

@@ -1038,7 +1038,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	materialData->enabaleLighting = false;
 
-	directionalLightData->color = { 0.0f,0.0f,0.0f };
+	directionalLightData->color = { 0.0f,0.0f,0.0f,0.0f };
 	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
 	directionalLightData->intensity = 1.0f;
 	

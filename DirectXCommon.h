@@ -123,6 +123,8 @@ private:
 	Microsoft::WRL::ComPtr<IDxcCompiler3> dxcCompiler_ = nullptr;
 	Microsoft::WRL::ComPtr<IDxcIncludeHandler> includeHandler_ = nullptr;
 
+	//Microsoft::WRL::ComPtr<IDxcBlobEncoding> shaderSource_ = nullptr;
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource_;
 
 	//デスクリプタのサイズ

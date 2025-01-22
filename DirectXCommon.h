@@ -38,10 +38,10 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource();
 
 	//深度バッファの生成
-	//void CreateDepthStencil();
+	void CreateDepthStencil();
 
 	//各種デスクリプタヒープの生成
 	void CreateDescriptorHeap();

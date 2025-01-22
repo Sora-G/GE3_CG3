@@ -1027,6 +1027,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	Matrix4x4* transformationMatrixData = nullptr;
 
+	ID3D12Resource* directionalLightResource = CreateBufferResource(device, sizeof(DirectionalLight));
+
 	DirectionalLight* directionalLightData = nullptr;
 
 	//書き込むためのアドレスを取得

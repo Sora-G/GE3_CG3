@@ -29,7 +29,7 @@ public:
 	//スワップチェーンの生成
 	void CreateSwapChain();
 
-	IDxcBlob* CompileShader(
+	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(
 		//CompilerするShaderファイルへのパス
 		const std::wstring& filePath,
 		//Compilerに使用するProfile
@@ -38,10 +38,10 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
-	ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height);
 
 	//深度バッファの生成
-	void CreateDepthStencil();
+	//void CreateDepthStencil();
 
 	//各種デスクリプタヒープの生成
 	void CreateDescriptorHeap();
@@ -52,12 +52,12 @@ public:
 	/// <summary>
 	/// 指定番号のCPUデスクリプタハンドルを取得する
 	/// </summary>
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 	/// <summary>
 	/// 指定番号のGPUデスクリプタハンドルを取得する
 	/// </summary>
-	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize, uint32_t index);
+	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 
 	/// <summary>
 	/// SRV指定番号のCPUデスクリプタハンドルう取得する
@@ -123,8 +123,6 @@ private:
 	Microsoft::WRL::ComPtr<IDxcCompiler3> dxcCompiler_ = nullptr;
 	Microsoft::WRL::ComPtr<IDxcIncludeHandler> includeHandler_ = nullptr;
 
-	//Microsoft::WRL::ComPtr<IDxcBlobEncoding> shaderSource_ = nullptr;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource_;
 
 	//デスクリプタのサイズ
@@ -144,7 +142,7 @@ private:
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
 	//フェンスの生成
-	ID3D12Fence* fence_;
+	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 
 	//ビューポートを生成
 	D3D12_VIEWPORT viewport_{};

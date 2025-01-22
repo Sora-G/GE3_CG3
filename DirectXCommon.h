@@ -20,15 +20,6 @@ public:
 	//初期化
 	void Initialize(WinApp* winApp);
 	
-	//デバイスの初期化
-	void InitializeDevice();
-
-	//コマンド関連の初期化
-	void InitializeCommand();
-
-	//スワップチェーンの生成
-	void CreateSwapChain();
-
 	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(
 		//CompilerするShaderファイルへのパス
 		const std::wstring& filePath,
@@ -39,6 +30,15 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource();
+
+	//デバイスの初期化
+	void InitializeDevice();
+
+	//コマンド関連の初期化
+	void InitializeCommand();
+
+	//スワップチェーンの生成
+	void CreateSwapChain();
 
 	//深度バッファの生成
 	void CreateDepthStencil();

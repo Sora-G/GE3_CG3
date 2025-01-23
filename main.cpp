@@ -1035,13 +1035,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
+	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
 
 	//色は白！
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	materialData->enabaleLighting = false;
 
-	directionalLightData->color = { 0.0f,0.0f,0.0f,0.0f };
-	directionalLightData->direction = { 0.0f,-1.0f,0.0f };
+	directionalLightData->color = { 255.0f,255.0f,255.0f,255.0f };
+	directionalLightData->direction = { 0.0f,-50.0f,-50.0f };
 	directionalLightData->intensity = 1.0f;
 	
 
@@ -1243,11 +1244,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	device->CreateShaderResourceView(textureResource, &srvDesc, textureSrvHandleCPU);
 
 	//Transform変数の作成
-	Transform transform = { {1.0f,1.0f,1.0f},{0.0f,4.7f,0.0f},{0.0f,-0.5f,5.0f} };
+	Transform transform = { {1.0f,1.0f,1.0f},{0.0f,-1.57f,0.0f},{0.0f,0.0f,0.0f} };
 	Transform transformSprite{ {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f} };
 
 	//camera変数の作成
-	Transform cameraTransform{ {1.0f,1.0f,1.0f},{0.7f,0.0f,0.0f},{0.0f,9.0f,-5.0f} };
+	Transform cameraTransform{ {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 
 
 	MSG msg{};

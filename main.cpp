@@ -86,6 +86,11 @@ struct DirectionalLight
 	float intensity;//輝度
 };
 
+struct  CameraForGPU
+{
+	Vector3 worldPosition;
+};
+
 //ウィンドウプロージャ
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -753,7 +758,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	//RootParameter作成、複数配置出来るので配列　今回は結果１つの長さなので長さ１の配列
-	D3D12_ROOT_PARAMETER rootParameters[4] = {};
+	D3D12_ROOT_PARAMETER rootParameters[5] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
@@ -784,6 +789,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CBVを使う
 	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixaelShaderを使う
 	rootParameters[3].Descriptor.ShaderRegister = 1;//レジスタ番号１を使う
+
+	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//CBVを使う
+	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;//PixaelShaderを使う
+	rootParameters[4].Descriptor.ShaderRegister = 2;//レジスタ番号１を使う
+
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -1026,16 +1036,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Material* materialData = nullptr;
 
 	Matrix4x4* transformationMatrixData = nullptr;
-
+	//ライト用のリソースを作る
 	ID3D12Resource* directionalLightResource = CreateBufferResource(device, sizeof(DirectionalLight));
 
 	DirectionalLight* directionalLightData = nullptr;
+	//カメラ用のリソースを作る
+	ID3D12Resource* cameraResource = CreateBufferResource(device, sizeof(CameraForGPU));
+	//マテリアルにデータを書き込む
+	CameraForGPU* cameraData = nullptr;
 
 	//書き込むためのアドレスを取得
 	materialResource->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&wvpData));
 	wvpResource->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixData));
 	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightData));
+	cameraResource->Map(0, nullptr, reinterpret_cast<void**>(&cameraData));
 
 	//色は白！
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -1045,6 +1060,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	directionalLightData->direction = { 0.0f,-50.0f,-50.0f };
 	directionalLightData->intensity = 1.0f;
 	
+	cameraData->worldPosition = { 0.0f,0.0f,-40.0f };
+
 
 	////頂点バッファービューを生成
 	//D3D12_VERTEX_BUFFER_VIEW vertexBufferView{};
@@ -1383,6 +1400,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			//instancing用のDataを読み込む為にStructuredBufferのSRVを設定する
 			commandList->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 
+			//cameraのCBufferの場所を設定
+			commandList->SetGraphicsRootConstantBufferView(4, cameraResource->GetGPUVirtualAddress());
+
 			//描画(DrawCall/ドローコール)３頂点で１つのインスタンス
 			//commandList->DrawInstanced(6, 1, 0, 0);
 			//commandList->DrawInstanced(UINT(modelData.vertices.size()), 10, 0, 0);
@@ -1480,6 +1500,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	vertexShaderBlob->Release();
 	materialResource->Release();
 	instancingResource->Release();
+	directionalLightResource->Release();
+	cameraResource->Release();
 
 #ifdef _DEBUG
 	debugController->Release();

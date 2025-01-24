@@ -18,8 +18,14 @@ struct PixelShaderOutput
 	float32_t4 color : SV_TARGET0;
 };
 
+struct Camera
+{
+    float32_t3 worldPosition;
+};
+
 ConstantBuffer<Material> gMaterial : register(b0);
 ConstantBuffer<DirectionalLight> gDirecitonalLight : register(b1);
+ConstantBuffer<Camera> gCamera : register(b2);
 
 Texture2D<float32_t4>gTexture : register(t0);
 SamplerState gSampler : register(t0);
@@ -31,6 +37,8 @@ PixelShaderOutput main(VertexShaderOutput input)
     float32_t4 textureColor = gTexture.Sample(gSampler, input.texcoord);
     output.color = gMaterial.color * textureColor;
 
+    float32_t3 toEye = normalize(gCamera.worldPosition - input.worldPosition);
+    
     if (gMaterial.enableLighting != 0)//LightingÇ∑ÇÈèÍçá
     {
         float cos = saturate(dot(normalize(input.normal)), -gDirecitonalLight.direction);

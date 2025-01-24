@@ -1055,7 +1055,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//色は白！
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	materialData->enabaleLighting = true;
+	materialData->enabaleLighting = false;
 
 	directionalLightData->color = { 1.0f,1.0f,1.0f,1.0f };
 	directionalLightData->direction = { 0.0f,-1.0f,0.0f };

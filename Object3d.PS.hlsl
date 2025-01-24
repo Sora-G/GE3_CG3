@@ -4,6 +4,7 @@ struct Material
 {
 	float32_t4 color;
     int32_t enableLighting;
+    float32_t shininess;
 };
 
 struct DirectionalLight
@@ -38,6 +39,21 @@ PixelShaderOutput main(VertexShaderOutput input)
     output.color = gMaterial.color * textureColor;
 
     float32_t3 toEye = normalize(gCamera.worldPosition - input.worldPosition);
+    
+    float32_t3 reflectLight = reflect(gDirecitonalLight.direction, normalize(input.normal));
+    
+    float RdotE = dot(reflectLight, toEye); 
+    float specularPow = pow(saturate(RdotE), gMaterial.shininess);//îΩéÀãæñ 
+    
+    //ägéUîΩéÀ
+    float32_t3 diffuse = gMaterial.color.rgb * textureColor.rgb * gDirecitonalLight.color.rgb * cos * gDirecitonalLight.intensity;
+    //ãæñ îΩéÀ
+    float32_t3 specular = gDirecitonalLight.color.rgb * gDirecitonalLight.intensity * specularPow * float32_t3(1.0f, 1.0f, 1.0f);
+    //ägéUîΩéÀ+ãæñ îΩéÀ
+    output.color.rgb = diffuse + specular;
+    //ÉAÉãÉtÉ@ÇÕç°Ç‹Ç≈í ÇË
+    output.color.a = gMaterial.color.a * textureColor.a;
+    
     
     if (gMaterial.enableLighting != 0)//LightingÇ∑ÇÈèÍçá
     {

@@ -53,6 +53,7 @@ struct Material
 {
 	Vector4 color;
 	int32_t enabaleLighting;
+	float shininess;
 };
 
 struct Transform

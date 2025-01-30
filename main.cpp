@@ -1300,7 +1300,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			ImGui::DragFloat3("CameraTranslate", &cameraTransform.translate.x, 0.01f);
 			ImGui::ColorEdit3("LightColor", &directionalLightData->color.x);
 			ImGui::DragFloat3("LightDirection", &directionalLightData->direction.x, 0.01f);
-			ImGui::DragFloat("LightIntensity", &directionalLightData->intensity, 0.01f);
+			ImGui::DragFloat("LightIntensity", &directionalLightData->intensity, 0.01f,-1.0f,1.0f);
 			ImGui::End();
 
 			//WorldViewProjectionMatrixを作る

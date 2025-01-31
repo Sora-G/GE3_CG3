@@ -63,6 +63,7 @@ struct Particle
 {
 	Transform transform;
 	Vector3 velocity;
+	Vector4 color;
 };
 
 struct MaterialData
@@ -485,6 +486,8 @@ Particle MakeNewParticle(std::mt19937& randomEngine)
 	particle.transform.rotate = { 0.0f,0.0f,0.0f };
 	particle.transform.translate = { distribution(randomEngine), distribution(randomEngine), distribution(randomEngine) };
 	particle.velocity = { distribution(randomEngine), distribution(randomEngine), distribution(randomEngine) };
+	std::uniform_real_distribution<float>distColor(0.0f, 1.0f);
+	particle.color = { distColor(randomEngine),distColor(randomEngine) ,distColor(randomEngine) ,1.0f };
 	return particle;
 }
 

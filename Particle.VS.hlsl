@@ -26,5 +26,6 @@ VertexShaderOutput main(VertexShaderInput input,uint32_t instanced : SV_Instance
     VertexShaderOutput output;
     output.position = mul(input.position, gTransformationMatrices[instanced].WVP);
     output.texcoord = input.texcoord;
+    output.color = gParticle[instanceId].color;
     return output;
 }

@@ -1092,8 +1092,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		particles[index].transform.scale = { 1.0f, 1.0f, 1.0f };
 		particles[index].transform.rotate = { 0.0f, 0.0f, 0.0f };
 		particles[index].transform.translate = { index * 0.1f, index * 0.1f, index * 0.1f };
+		particles[index].velocity = { 0.0f,1.0f,0.0f };
 	}
 
+	//Δtを定義　とりあえず60fps固定してあるが実時間を計測して可変fpsで動かせるようにしておくとなお良い
+	const float kDeltaTime = 1.0f / 60.0f;
 
 	//ビューポート
 	D3D12_VIEWPORT viewport{};
@@ -1219,6 +1222,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
 				instancingData[index].WVP = worldViewProjectionMatrix;
 				instancingData[index].World = worldMatrix;
+
+				particles[index].transform.translate.x += particles[index].velocity.x * kDeltaTime;
+				particles[index].transform.translate.y += particles[index].velocity.y * kDeltaTime;
+				particles[index].transform.translate.z += particles[index].velocity.z * kDeltaTime;
 			}
 
 			//これから書き込むバックバッファのインデックスを取得

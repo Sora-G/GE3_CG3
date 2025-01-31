@@ -15,6 +15,7 @@
 #include <fstream>
 #include <sstream>
 #include <wrl.h>
+#include <random>
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -23,6 +24,9 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
+
+std::random_device seedGenerator;
+std::mt19937 randomEngine(seedGenerator());
 
 //vecto4構造体
 typedef struct Vector4
@@ -1089,10 +1093,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Particle particles[kNumInstance];
 	for (uint32_t index = 0; index < kNumInstance; ++index)
 	{
+		std::uniform_real_distribution<float>distribution(-1.0f, 1.0f);
 		particles[index].transform.scale = { 1.0f, 1.0f, 1.0f };
 		particles[index].transform.rotate = { 0.0f, 0.0f, 0.0f };
-		particles[index].transform.translate = { index * 0.1f, index * 0.1f, index * 0.1f };
-		particles[index].velocity = { 0.0f,1.0f,0.0f };
+		particles[index].transform.translate = { distribution(randomEngine), distribution(randomEngine), distribution(randomEngine)};
+		particles[index].velocity = { distribution(randomEngine),distribution(randomEngine),distribution(randomEngine) };
 	}
 
 	//Δtを定義　とりあえず60fps固定してあるが実時間を計測して可変fpsで動かせるようにしておくとなお良い

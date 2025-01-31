@@ -6,7 +6,14 @@ struct TransformationMatrix
     float4x4 World;
 };
 
-StructuredBuffer<TransformationMatrix> gTransformationMatrices : register(t0);
+struct ParticleForGPU
+{
+    float4x4 WVP;
+    float4x4 World;
+    float4 Color;
+};
+
+StructuredBuffer<ParticleForGPU> gParticle : register(t0);
 
 struct VertexShaderInput
 {

@@ -55,6 +55,12 @@ struct Transform
 	Vector3 translate;
 };
 
+struct Particle
+{
+	Transform transform;
+	Vector3 velocity;
+};
+
 struct MaterialData
 {
 	std::string textureFilePath;
@@ -1080,12 +1086,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	device->CreateShaderResourceView(instancingResource.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 
 	
-	Transform transforms[kNumInstance];
+	Particle particles[kNumInstance];
 	for (uint32_t index = 0; index < kNumInstance; ++index)
 	{
-		transforms[index].scale = { 1.0f, 1.0f, 1.0f };
-		transforms[index].rotate = { 0.0f, 0.0f, 0.0f };
-		transforms[index].translate = { index * 0.1f, index * 0.1f, index * 0.1f };
+		particles[index].transform.scale = { 1.0f, 1.0f, 1.0f };
+		particles[index].transform.rotate = { 0.0f, 0.0f, 0.0f };
+		particles[index].transform.translate = { index * 0.1f, index * 0.1f, index * 0.1f };
 	}
 
 
@@ -1208,7 +1214,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			for (uint32_t index = 0; index < kNumInstance; ++index)
 			{
 				Matrix4x4 worldMatrix =
-					MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
+					MakeAffineMatrix(particles[index].transform.scale, particles[index].transform.rotate, particles[index].transform.translate);
 				Matrix4x4 viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
 				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, viewProjectionMatrix);
 				instancingData[index].WVP = worldViewProjectionMatrix;

@@ -43,18 +43,20 @@ PixelShaderOutput main(VertexShaderOutput input)
         float3 toEye = normalize(gCamera.worldPosition - input.worldPosition);
         float3 reflectLight = reflect(normalize(gDirecitonalLight.direction), normalize(input.normal));
 
-        float RdotE = dot(reflectLight, toEye);
-        float specularPow = pow(saturate(RdotE), 70.0);
+        //float RdotE = dot(reflectLight, toEye);
+        //float specularPow = pow(saturate(RdotE), 70.0);
 
-// ägéUîΩéÀ
-        float3 diffuse =
-gMaterial.color.rgb * textureColor.rgb * gDirecitonalLight.color.rgb * cos * gDirecitonalLight.intensity;
-// ãæñ îΩéÀ
-        float3 specular =
-gDirecitonalLight.color.rgb * gDirecitonalLight.intensity * specularPow * float3(1.0f, 1.0f, 1.0f);
-// ägéUîΩéÀ+ãæñ îΩéÀ
+        float3 halfVector = normalize(-gDirecitonalLight.direction + toEye);
+        float NDotH = dot(normalize(input.normal), halfVector);
+        float specularPow = pow(saturate(NDotH), gMaterial.shininess);
+        
+        // ägéUîΩéÀ
+        float3 diffuse = gMaterial.color.rgb * textureColor.rgb * gDirecitonalLight.color.rgb * cos * gDirecitonalLight.intensity;
+        // ãæñ îΩéÀ
+        float3 specular = gDirecitonalLight.color.rgb * gDirecitonalLight.intensity * specularPow * float3(1.0f, 1.0f, 1.0f);
+        // ägéUîΩéÀ+ãæñ îΩéÀ
         output.color.rgb = diffuse + specular;
-// ÉAÉãÉtÉ@ÇÕç°Ç‹Ç≈í ÇË
+        // ÉAÉãÉtÉ@ÇÕç°Ç‹Ç≈í ÇË
         output.color.a = gMaterial.color.a * textureColor.a;
     }
     else

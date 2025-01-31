@@ -1082,6 +1082,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 	const int kNumInstance = 10;//インスタンス数
+
+	Particle particles[kNumInstance];
+	for (uint32_t index = 0; index < kNumInstance; ++index)
+	{
+		particles[index] = MakeNewParticle(randomEngine);
+	}
+
 	//Instancing用のTransformationMatrixリソースを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource>instancingResource =
 		CreateBufferResource(device, sizeof(ParticleForGPU) * kNumInstance);
@@ -1093,7 +1100,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	{
 		instancingData[index].WVP = MakeIdentity4x4();
 		instancingData[index].World = MakeIdentity4x4();
-		instancingData[index].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+		instancingData[index].color = particles[index].color;
 	}
 
 	//DescriptorSizeを取得しておく
@@ -1112,11 +1119,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	device->CreateShaderResourceView(instancingResource.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 
 	
-	Particle particles[kNumInstance];
-	for (uint32_t index = 0; index < kNumInstance; ++index)
-	{
-		particles[index] = MakeNewParticle(randomEngine);
-	}
+	
 
 	//Δtを定義　とりあえず60fps固定してあるが実時間を計測して可変fpsで動かせるようにしておくとなお良い
 	const float kDeltaTime = 1.0f / 60.0f;

@@ -150,11 +150,23 @@ private:
 	//フェンスの生成
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
 
+	HANDLE fenceEvent;
+
 	//ビューポートを生成
 	D3D12_VIEWPORT viewport_{};
 
 	//シザーを作成
 	D3D12_RECT scissorRect_{};
+
+	//RTVを２つ作るのでディスクリプタを２つ用意
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandles[2];
+	
+	uint64_t fenceValue;
+
+	UINT backBufferIndex;
+
+	D3D12_RESOURCE_BARRIER barrier{};
+
 
 	////dxCompilerを初期化
 	//IDxcCompiler3* dxcCompiler_ = nullptr;

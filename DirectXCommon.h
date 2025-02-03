@@ -19,13 +19,6 @@ public:
 
 	//初期化
 	void Initialize(WinApp* winApp);
-	
-	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(
-		//CompilerするShaderファイルへのパス
-		const std::wstring& filePath,
-		//Compilerに使用するProfile
-		const wchar_t* profile
-	);
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
@@ -104,6 +97,25 @@ public:
 
 	//描画後処理
 	void PostDraw();
+
+	//getter
+	ID3D12Device* GetDevice() const { return device_.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+
+	//シェーダーのコンパイル
+	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(const std::wstring& filePath, const wchar_t* profile);
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
+
+	void UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> texture, const DirectX::ScratchImage& mipImages);
+
+	static DirectX::ScratchImage LoadTexture(const std::string& filePath);
+
+	IDXGISwapChain4* GetSwapChain()const { return swapChain_.Get(); }
+
+	ID3D12DescriptorHeap* GetSRVDescriptorHeap()const { return srvDescriptorHeap_.Get(); }
 
 private:
 	

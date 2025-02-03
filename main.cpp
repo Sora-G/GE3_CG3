@@ -287,6 +287,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		dxCommon->PostDraw();
 	}
 
+	
 //	CoInitializeEx(0, COINIT_MULTITHREADED);
 //
 //	WNDCLASS wc{};

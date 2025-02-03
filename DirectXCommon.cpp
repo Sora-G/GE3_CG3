@@ -440,3 +440,11 @@ void DirectXCommon::InitializeImGui()
 		srvDescriptorHeap_->GetGPUDescriptorHandleForHeapStart()
 	);
 }
+
+void DirectXCommon::PreDraw()
+{
+}
+
+void DirectXCommon::PostDraw()
+{
+}

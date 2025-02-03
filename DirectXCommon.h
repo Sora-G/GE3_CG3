@@ -99,6 +99,12 @@ public:
 	/// </summary>
 	void InitializeImGui();
 
+	//描画前処理
+	void PreDraw();
+
+	//描画後処理
+	void PostDraw();
+
 private:
 	
 	HRESULT hr_;

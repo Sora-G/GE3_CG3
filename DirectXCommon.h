@@ -8,6 +8,7 @@
 #include "iostream"
 #include <string>
 #include "dxcapi.h"
+#include "externals/DirectXTex/DirectXTex.h"
 
 #pragma comment(lib,"dxcompiler.lib")
 

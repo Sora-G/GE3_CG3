@@ -38,6 +38,9 @@ public:
 	//テクスチャデータの転送
 	void UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages);
 
+	//テクスチャファイルの読み込み
+	static DirectX::ScratchImage LoadTexture(const std::string& filePath);
+
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 

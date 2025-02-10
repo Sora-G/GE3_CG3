@@ -37,6 +37,9 @@
     <Filter Include="StringUtility">
       <UniqueIdentifier>{dee3479d-a93e-4bfa-aced-7bc8f1eb8b56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="D3DResourceLeakChecker">
+      <UniqueIdentifier>{9fa2019d-3852-455f-a8b3-4fa27e598ed5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="StringUtility.cpp">
       <Filter>StringUtility</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DReourceLeakChecker.cpp">
+      <Filter>D3DResourceLeakChecker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="StringUtility.h">
       <Filter>StringUtility</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DReourceLeakChecker.h">
+      <Filter>D3DResourceLeakChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

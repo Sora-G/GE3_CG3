@@ -125,6 +125,8 @@ public:
 	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 	ID3D12DescriptorHeap* GetSRVDescriptorHeap()const { return srvDescriptorHeap_.Get(); }
 
+	void Finalize();
+
 private:
 	
 	HRESULT hr_;

@@ -3,7 +3,7 @@ class D3DReourceLeakChecker
 {
 	public:
 		/// <summary>
-		/// デストラクタ
+		/// 繝�繧ｹ繝医Λ繧ｯ繧ｿ
 		/// </summary>
 		~D3DReourceLeakChecker();
 };

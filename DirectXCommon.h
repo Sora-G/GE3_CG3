@@ -20,6 +20,7 @@ public:
 	//初期化
 	void Initialize(WinApp* winApp);
 	
+	//シェーダーコンパイル関数
 	Microsoft::WRL::ComPtr<IDxcBlob> CompileShader(
 		//CompilerするShaderファイルへのパス
 		const std::wstring& filePath,

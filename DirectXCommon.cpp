@@ -5,7 +5,6 @@
 #include "StringUtility.h"
 #include <dxcapi.h>
 #include "externals/imgui/imgui_impl_dx12.h"
-#include "externals/DirectXTex/DirectXTex.h"
 #include "externals/imgui/imgui_impl_win32.h"
 
 
@@ -157,6 +156,38 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateBufferResource(ID3D1
 	//実際に頂点リソースを作る
 	ID3D12Resource* resource = nullptr;
 	HRESULT hr = device->CreateCommittedResource(&uproadHeapProperties, D3D12_HEAP_FLAG_NONE, &vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&resource));
+	assert(SUCCEEDED(hr));
+	return resource;
+}
+
+//テクスチャリソースの生成
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectXCommon::CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata)
+{
+	//1.metadataを基にResourceの設定
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Width = UINT(metadata.width);								//Textureの幅
+	resourceDesc.Height = UINT(metadata.height);							//Textureの高さ
+	resourceDesc.MipLevels = UINT16(metadata.mipLevels);					//mipMapの数
+	resourceDesc.DepthOrArraySize = UINT16(metadata.arraySize);				//奥行 or 配列Texture
+	resourceDesc.Format = metadata.format;									//TextureのFromat
+	resourceDesc.SampleDesc.Count = 1;										//サンプリングカウント　１に固定
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION(metadata.dimension);	//Textureの次元数　普段使っているのは２次元
+
+	//2.利用するHeapの設定
+	D3D12_HEAP_PROPERTIES heapProperties{};
+	heapProperties.Type = D3D12_HEAP_TYPE_CUSTOM;//細かい設定を行う
+	heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;//WriteBackポリシーでCPUにアクセス可能
+	heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;//プロセッサの近くに配置
+
+	//3.Resourceを生成する
+	ID3D12Resource* resource = nullptr;
+	HRESULT hr = device->CreateCommittedResource(
+		&heapProperties,//Heapの設定
+		D3D12_HEAP_FLAG_NONE,//Heapの特殊な設定
+		&resourceDesc,//Resourceの設定
+		D3D12_RESOURCE_STATE_GENERIC_READ,//初回のResourceState
+		nullptr,//Clear最適値
+		IID_PPV_ARGS(&resource));//作成するResoourceポインタへのポインタ
 	assert(SUCCEEDED(hr));
 	return resource;
 }

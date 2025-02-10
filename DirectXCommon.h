@@ -8,6 +8,7 @@
 #include "iostream"
 #include <string>
 #include "dxcapi.h"
+#include "externals/DirectXTex/DirectXTex.h"
 
 #pragma comment(lib,"dxcompiler.lib")
 
@@ -30,6 +31,9 @@ public:
 
 	//リソース生成関数
 	Microsoft::WRL::ComPtr<ID3D12Resource>CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
+
+	Microsoft::WRL::ComPtr<ID3D12Resource>CreateTextureResource(ID3D12Device* device, const DirectX::TexMetadata& metadata);
+
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 

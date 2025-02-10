@@ -9,6 +9,7 @@
 #include <string>
 #include "dxcapi.h"
 #include "externals/DirectXTex/DirectXTex.h"
+#include "chrono"
 
 #pragma comment(lib,"dxcompiler.lib")
 
@@ -129,6 +130,14 @@ public:
 
 private:
 	
+	//FPS固定化処理
+	void InitializeFixFPS();
+	//FPS固定更新
+	void UpdateFixFPS();
+
+	//記録時間(FPS固定用)
+	std::chrono::steady_clock::time_point reference_;
+
 	HRESULT hr_;
 	//WindowsAPI
 	WinApp* winApp_ = nullptr;
